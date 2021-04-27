@@ -6,7 +6,7 @@ docker run -d --network=pfa --name=nodecontainer -v $(pwd):/usr/src/app gaspar/p
 
 Subir container NGINX
 
-docker run --network=pfa -p 8080:80 gaspar/pfa-nginx
+docker run -d --network=pfa -p 8080:80 gaspar/pfa-nginx
 
 Subir container MYSQL
 
@@ -20,3 +20,7 @@ Nesta parte tive muitas dificuldades:
 Vou esperar para ver na próxima aula a correcção deste desafio.
 
 3- criei um ficheiro sql para criar a tabela e registos
+
+4- tentei usar imagem do mysql 5.7 e 8 e não consigo acessar à db (dão erros diferentes), com a versao 5.7 dá erro: 
+sqlMessage: "Access denied for user 'pfa-user'@'172.18.0.3' (using password: YES)" 
+- consigo entrar no container (docker exec -it db bash | mysql -u pfa-user -p) consigo fazer select à tabela fc-modules.
