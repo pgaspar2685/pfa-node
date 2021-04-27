@@ -10,7 +10,7 @@ docker run --network=pfa -p 8080:80 gaspar/pfa-nginx
 
 Subir container MYSQL
 
-docker run --network=pfa --name=db -v $(pwd):/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7 (também tentei criar imagem com comando do innodb)
+docker run -d --network=pfa --name=db --hostname=db -e MYSQL_ROOT_PASSWORD=pfa-root -e MYSQL_DATABASE=pfa-db -e MYSQL_USER=pfa-user -e MYSQL_PASSWORD=pfa-pass gaspar/pfa-mysql
 
 Nesta parte tive muitas dificuldades:
 
@@ -18,3 +18,5 @@ Nesta parte tive muitas dificuldades:
 
 2- O volume pela raiz é criado (mas eu queria dentro da pasta mysql), contudo o mysql morre, se fizer docker logs db (nome que dei ao container) aparece diversos erros - acedi às aulas e em testes na minha máquina com o docker composer consigo colocar a funcionar.
 Vou esperar para ver na próxima aula a correcção deste desafio.
+
+3- criei um ficheiro sql para criar a tabela e registos
