@@ -7,17 +7,17 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host     : 'db',
     user     : 'pfa-user',
-    password : 'pfa-pass',
+    password : 'pfa-root',
     database : 'pfa-db'
 });
 
 app.get('/', (req, res) => {
-    res.send("PFA Docker!!!");
+    res.send("PFA Docker!");
 
     con.connect(function(err) {
         if (err) throw err;
         
-        console.log("connect");
+        res.send("Connect DB!!");
 
         let sql = "SELECT * FROM `fc-modules`";
         con.query(sql, function (err, result) {
