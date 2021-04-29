@@ -1,26 +1,27 @@
 # fc-pfa-docker-node
 
+Criar a rede
+docker network create pfa
+
 Subir container NODEJS
 
-docker run -d --network=pfa --name=nodecontainer -v $(pwd):/usr/src/app gaspar/pfa-node node index.js
+docker run -d --network=pfa --name=pfa-node -v $(pwd)/node:/usr/src/app pgaspar2685/pfa-node
 
 Subir container NGINX
 
-docker run -d --network=pfa -p 8080:80 gaspar/pfa-nginx
+docker run -d --network=pfa -p 8080:80 pgaspar2685/pfa-nginx
 
 Subir container MYSQL
 
-docker run -d --network=pfa --name=db --hostname=db -e MYSQL_ROOT_PASSWORD=pfa-root -e MYSQL_DATABASE=pfa-db -e MYSQL_USER=pfa-user -e MYSQL_PASSWORD=pfa-pass gaspar/pfa-mysql
+docker run -d --network=pfa --name=db --hostname=db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=pfa-db pgaspar2685/pfa-mysql
 
-Nesta parte tive muitas dificuldades:
+Problema que tive:
 
-1- A criação do volume na pasta "mysql" o container morre sempre (tentei dentro da diretoria executar o codigo com $(pwd), tentei na diretoria raiz com $(pwd)/mysql , e também tentei com ./mysql , mas ai o docker se queixa que precisar de um caminho absoluto)
+Ao criar volume para a base de dados não funciona, dá-me um erro que não consigo entender:
 
-2- O volume pela raiz é criado (mas eu queria dentro da pasta mysql), contudo o mysql morre, se fizer docker logs db (nome que dei ao container) aparece diversos erros - acedi às aulas e em testes na minha máquina com o docker composer consigo colocar a funcionar.
-Vou esperar para ver na próxima aula a correcção deste desafio.
+2021-04-29T01:15:59.020296Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
+mysqld: Can't change permissions of the file 'ca-key.pem' (Errcode: 1 - Operation not permitted)
+2021-04-29T01:15:59.256355Z 0 [ERROR] Could not set file permission for ca-key.pem
+2021-04-29T01:15:59.256393Z 0 [ERROR] Aborting
 
-3- criei um ficheiro sql para criar a tabela e registos
-
-4- tentei usar imagem do mysql 5.7 e 8 e não consigo acessar à db (dão erros diferentes), com a versao 5.7 dá erro: 
-sqlMessage: "Access denied for user 'pfa-user'@'172.18.0.3' (using password: YES)" 
-- consigo entrar no container (docker exec -it db bash | mysql -u pfa-user -p) consigo fazer select à tabela fc-modules.
+docker run -d --network=pfa --name=db --hostname=db -v $(pwd):/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=pfa-db pgaspar2685/pfa-mysql
