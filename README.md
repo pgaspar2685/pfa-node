@@ -3,6 +3,10 @@
 <strong>Criar a rede:</strong><br>
 docker network create pfa
 
+<strong>Subir container MYSQL:</strong><br>
+docker run -d --network=pfa --name=pfa-mysql --hostname=db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=pfa-db pgaspar2685/pfa-mysql<br>
+<a href="https://hub.docker.com/repository/docker/pgaspar2685/pfa-mysql">link imagem mysql</a>
+
 <strong>Subir container NODEJS:</strong><br>
 docker run -d --network=pfa --name=pfa-node -v $(pwd)/node:/usr/src/app pgaspar2685/pfa-node<br>
 <a href="https://hub.docker.com/repository/docker/pgaspar2685/pfa-node">link imagem node</a>
@@ -11,9 +15,7 @@ docker run -d --network=pfa --name=pfa-node -v $(pwd)/node:/usr/src/app pgaspar2
 docker run -d --network=pfa -p 8080:80 pgaspar2685/pfa-nginx<br>
 <a href="https://hub.docker.com/repository/docker/pgaspar2685/pfa-nginx">link imagem nginx</a>
 
-<strong>Subir container MYSQL:</strong><br>
-docker run -d --network=pfa --name=db --hostname=db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=pfa-db pgaspar2685/pfa-mysql<br>
-<a href="https://hub.docker.com/repository/docker/pgaspar2685/pfa-mysql">link imagem mysql</a>
+
 
 <strong>Problema que tive:</strong><br>
 Ao criar volume para a base de dados não funciona, dá-me um erro que não consigo entender:
