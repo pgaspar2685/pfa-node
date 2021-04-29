@@ -6,14 +6,17 @@ docker network create pfa
 Subir container NODEJS
 
 docker run -d --network=pfa --name=pfa-node -v $(pwd)/node:/usr/src/app pgaspar2685/pfa-node
+<a href="https://hub.docker.com/repository/docker/pgaspar2685/pfa-node">link imagem node</a>
 
 Subir container NGINX
 
 docker run -d --network=pfa -p 8080:80 pgaspar2685/pfa-nginx
+<a href="https://hub.docker.com/repository/docker/pgaspar2685/pfa-nginx">link imagem nginx</a>
 
 Subir container MYSQL
 
 docker run -d --network=pfa --name=db --hostname=db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=pfa-db pgaspar2685/pfa-mysql
+<a href="https://hub.docker.com/repository/docker/pgaspar2685/pfa-mysql">link imagem mysql</a>
 
 Problema que tive:
 
